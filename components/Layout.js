@@ -26,7 +26,6 @@ function Layout(props) {
             display: inline-flex;
             align-items: center;
             justify-content: space-between;
-            width: 100vw;
             position: fixed;
             z-index: 10;
             transform: translateX(-5%);

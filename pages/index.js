@@ -2,7 +2,9 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import PortfolioForm from '../components/Form';
 import { useForm } from "react-hook-form";
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+
 
 const assetPaths = {
   logo: '/logo/SVGS/SRrecordings.svg',
@@ -60,9 +62,13 @@ const PlayButton =()=> {
 
 
 const NavBar = (props) => {
-  const { logo, home, records, music, artists, concerts } = props;
+  const { logo, home, records, music, artists, concerts, windowWidth } = props;
+  const [navWidth, setNavWidth] = useState(windowWidth);
+  useEffect(() => {
+    setNavWidth(windowWidth)
+  })
   return (
-    <div className="Header">
+    <div className="Header" style={{ width: `${navWidth-.01}px`}}>
       <img 
         src={logo}
         className="SRRLogo" 
@@ -80,10 +86,10 @@ const NavBar = (props) => {
 }
 
 const HeroImage = (props) => {
-  const { hero } = props;
+  const { hero, windowWidth } = props;
   return (
-    <div style={{ backgroundImage: `url(${hero})` }} className='Hero'>
-      <div className='HeroText'>
+    <div style={{ backgroundImage: `url(${hero})`, width: `${windowWidth-0.1}px` }} className='Hero'>
+      <div className='HeroText' style={{ width: `${windowWidth/2}px` }}>
         <h1 className='HeroText'>A.M. Paradox</h1>
         <p>Christopher Brent Wood, better known as by stage name Brent Faiyaz, is an American singer and record producer. He released his debut project, an extended play entitled A.M. Paradox, in 2016.</p>
         <div className='PlayButton'>
@@ -94,7 +100,6 @@ const HeroImage = (props) => {
       <style jsx>{`
         .Hero {
           height: 100vh;
-          width: 100vw;
           background-repeat: repeat;
           background-size: 110%;
           display: flex;
@@ -118,7 +123,6 @@ const HeroImage = (props) => {
         }
         
         .HeroText {
-          width: 45%;
           margin-left: 5%;
           display: inline;
         }
@@ -144,9 +148,10 @@ const HeroImage = (props) => {
   )
 }
 
-const ImageWText = () => {
+const ImageWText = (props) => {
+  const { windowWidth } = props;
   return (
-    <div className='wrapper'>
+    <div className='wrapper' style={{ width: `${windowWidth-.01}px` }}>
       <div className="artistImg" style={{backgroundImage: `url(${assetPaths.brent})`}}></div>
       <div className="imageTextContainer">
         <h1>Brent Faiyaz, So Far Gone</h1>
@@ -210,7 +215,8 @@ const ImageWText = () => {
   )
 }
 
-const ImageSlider = () => {
+const ImageSlider = (props) => {
+  const { windowWidth } = props;
   const [slideAnimation, setSlideAnimation] = useState(0)
   const sliderCard = [
     {
@@ -233,8 +239,8 @@ const ImageSlider = () => {
     }
   ]
   return (
-    <div className="sliderSectionWrapper">
-      <div className="sliderWrapper">
+    <div style={{ width: `${windowWidth*1.5}px` }} className="sliderSectionWrapper">
+      <div style={{ width: `${windowWidth*1.5}px` }} className="sliderWrapper">
         <div className="sliderSectionTextBox">
           <h1 className="sliderSectionHeader">New Releases</h1>
           <p className="sliderSectionBodyText">New albums every single month, check out the newest & best from Snyder Recording artists, now available on Apple Music and Spotify.</p>
@@ -264,13 +270,13 @@ const ImageSlider = () => {
       <style jsx>
         {`
           .sliderSectionWrapper {
-            background-color: #f6f6f6
-            width: 150vw
+            background-color: #f6f6f6;
+            overflow-x: hidden
+            transform: translateX(-20%);
           }
 
           .sliderWrapper {
             margin-top: 10%;
-            width: 150vw;
             display: flex;
             flex-direction: column;
             flex-wrap: none;
@@ -279,7 +285,9 @@ const ImageSlider = () => {
             align-items: center;
             padding: 0 5em 0 5em;
             background-color: #f6f6f6;
+
             transform: translateX(-20%);
+            
           }
 
           .sliderCardsWrapper {
@@ -389,25 +397,24 @@ const ImageSlider = () => {
 }
 
 const GMaps = (props) => {
+  const { windowWidth } = props;
   return (
-    <div style={{ height: `${80}vh`, width: `${100}vw`, backgroundColor: "#001D5D", transform: `translateX(${-5}%)`}}>
+    <div style={{ height: `${80}vh`, width: `${windowWidth-0.1}px`, backgroundColor: "#001D5D", transform: `translateX(${-5}%)`}}>
 
     </div>
   )
 }
 
-const ContactUs = ({onSubmit}) => {
+const ContactUs = ({onSubmit, windowWidth}) => {
   const { register, handleSubmit, errors } = useForm();
-  const [ placeholder, setPlaceholder ] = useState('First Name');
   const [ firstNameError, lastNameError, emailError, textboxReqError, textboxLengthError ] = [ errors.firstName && errors.firstName?.type === "required", errors.lastName && errors.lastName?.type === "required", errors.email && errors.email?.type === "required", errors.textbox && errors.textbox?.type === "required", errors.textbox && errors.textbox?.type === "minLength" ];
-  console.log(placeholder)
   return (
-    <div className="ContactUsWrapper">
-      <div className="formWrapper">
+    <div style={{ width: `${windowWidth-.01}px` }} className="ContactUsWrapper">
+      <div style={{ width: `${windowWidth/2}px` }} className="formWrapper">
         <h1>Get In Touch</h1>
         <p>New albums every single month, check out the newest & best from Snyder Recording artists, now available on Apple Music & Spotify</p>
         <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form style={{ width: `${windowWidth/2}px` }} onSubmit={handleSubmit(onSubmit)}>
             {
               (()=>{
                 if (firstNameError || lastNameError || emailError || textboxReqError || textboxLengthError) { return (
@@ -457,13 +464,12 @@ const ContactUs = ({onSubmit}) => {
           </form>
         </div>
       </div>
-      <div style={{ backgroundImage: `url(${assetPaths.contactUs})` }} className="ContactUsImg">
+      <div style={{ width: `${windowWidth/2}px`, backgroundImage: `url(${assetPaths.contactUs})` }} className="ContactUsImg">
       </div>
       <style jsx>
         {`
           .ContactUsWrapper {
             height: 120vh;
-            width: 100vw;
             background-color: #fff;
             transform: translateX(-5%);
             display: flex;
@@ -474,7 +480,6 @@ const ContactUs = ({onSubmit}) => {
 
           .ContactUsImg {
             height: inherit;
-            width: 50em;
             float: right;
             background-repeat: no-repeat;
             background-attachment: scroll;
@@ -488,7 +493,6 @@ const ContactUs = ({onSubmit}) => {
             align-items: flex-start;
             justify-content: center;
             margin-left: 5%;
-            width: 70em
           }
 
           p {
@@ -502,7 +506,6 @@ const ContactUs = ({onSubmit}) => {
             flex-wrap: wrap;
             align-items: flex-start;
             justify-content: center
-            width: 30em;
           }
 
           input {
@@ -637,7 +640,6 @@ const CustomSelect =()=> {
             text-align: start;
             appearance: textfield;
             cursor: text;
-            margin: 0em;
             font: bold 13.3333px Karla;
           }
 
@@ -671,7 +673,8 @@ const CustomSelect =()=> {
   );
 }
 
-const Footer = () => {
+const Footer = (props) => {
+  const { windowWidth } = props;
   const footerLists = [
     [
         assetPaths.logo,
@@ -727,14 +730,6 @@ const Footer = () => {
     ]
   ]
 
-  const footerLogo = (props) => {
-    return <img className='logo' src={props.src} alt='logo' />
-  }
-
-  const item = () => {
-
-  }
-
   const SwapInLogo = (props) => {
     const { logoBoolean, logo, item } = props;
     console.log(logoBoolean)
@@ -746,8 +741,8 @@ const Footer = () => {
   }
   console.log(assetPaths.youtube)
   return (
-    <div className="listWrapper">
-      <ul className="FooterLists">
+    <div style={{ width: `${windowWidth-0.1}px` }} className="listWrapper">
+      <ul style={{ width: `${windowWidth-0.1}px` }} className="FooterLists">
         { 
           footerLists.map(list => (
             <ul className="list">
@@ -796,7 +791,6 @@ const Footer = () => {
             margin-top: 0;
             padding: 5%;
             background-color: #001D5D;
-            width: 100vw;
             transform: translateX(-5%)
           }
 
@@ -890,6 +884,15 @@ const Footer = () => {
 }
 
 export default function Home() {
+  const [windowWidth, setWindowWidth] = useState(0);
+  const updateWidth =()=> {
+    typeof window !== 'undefined' ? setWindowWidth(window.innerWidth) : 0
+  } 
+  useEffect(() => {
+    window.addEventListener("resize", updateWidth);
+    console.log(windowWidth)  
+  },[]);
+
   return (
     <div>
       <Head>
@@ -899,23 +902,26 @@ export default function Home() {
 
       <Layout>
         <div className="LayoutWrapper">
-          <NavBar 
+          <NavBar
             logo={assetPaths.logo}
             home={assetPaths.home}
             records={assetPaths.records}
             music={assetPaths.music}
             artists={assetPaths.artists}
             concerts={assetPaths.concerts}
+            windowWidth={windowWidth}
+            key={windowWidth}
           />
           <HeroImage
             hero={assetPaths.hero}
             playButton={assetPaths.playButton}
+            windowWidth={windowWidth}
           />
-          <ImageWText />
-          <ImageSlider />
-          <GMaps />
-          <ContactUs />
-          <Footer />
+          <ImageWText windowWidth={windowWidth} />
+          <ImageSlider windowWidth={windowWidth} />
+          <GMaps windowWidth={windowWidth} />
+          <ContactUs windowWidth={windowWidth} />
+          <Footer windowWidth={windowWidth} />
         </div>
       </Layout>
     </div>
