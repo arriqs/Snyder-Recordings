@@ -32,10 +32,10 @@ const PlayButton =()=> {
           <title>Group 4 Copy</title>
           <desc>Created with Sketch.</desc>
           <defs></defs>
-          <g id="DevTest" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-640.000000, -1918.000000)">
+          <g id="DevTest" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" transform="translate(-640.000000, -1918.000000)">
               <g id="caro" transform="translate(-219.000000, 1346.000000)" fill="#fff">
                   <g id="Group-4-Copy" transform="translate(878.500000, 591.500000) scale(-1, 1) translate(-878.500000, -591.500000) translate(859.000000, 572.000000)">
-                      <circle id="Oval" onMouseEnter={()=>{setOpacity(1)}} onMouseLeave={()=>{setOpacity(0.8)}} fill-opacity={opacity} cx="19.5" cy="19.5" r="19.5"></circle>
+                      <circle id="Oval" onMouseEnter={()=>{setOpacity(1)}} onMouseLeave={()=>{setOpacity(0.8)}} fillOpacity={opacity} cx="19.5" cy="19.5" r="19.5"></circle>
                       <g id="Group-6-Copy" transform="translate(18.500000, 19.500000) rotate(180.000000) translate(-18.500000, -19.500000) translate(14.000000, 15.000000)">
                           <polygon id="Triangle" fill="#001D5D" transform="translate(4.500000, 4.500000) rotate(90.000000) translate(-4.500000, -4.500000) " points="4.5 0 9 9 0 9"></polygon>
                       </g>
@@ -63,12 +63,11 @@ const PlayButton =()=> {
 
 const NavBar = (props) => {
   const { logo, home, records, music, artists, concerts, windowWidth } = props;
-  const [navWidth, setNavWidth] = useState(windowWidth);
-  useEffect(() => {
-    setNavWidth(windowWidth)
-  })
+  const navWidth = windowWidth-.001;
+  console.log(`navWidth:${navWidth}`);
+
   return (
-    <div className="Header" style={{ width: `${navWidth-.01}px`}}>
+    <div className="Header" style={{ width: `${navWidth}px`}}>
       <img 
         src={logo}
         className="SRRLogo" 
@@ -87,9 +86,11 @@ const NavBar = (props) => {
 
 const HeroImage = (props) => {
   const { hero, windowWidth } = props;
+  const heroWidth = windowWidth-.001;
+  console.log(`heroWidth:${heroWidth}`);
   return (
-    <div style={{ backgroundImage: `url(${hero})`, width: `${windowWidth-0.1}px` }} className='Hero'>
-      <div className='HeroText' style={{ width: `${windowWidth/2}px` }}>
+    <div style={{ backgroundImage: `url(${hero})`, width: `${heroWidth}px` }} className='Hero'>
+      <div className='HeroText' style={{ width: `${heroWidth/2}px` }}>
         <h1 className='HeroText'>A.M. Paradox</h1>
         <p>Christopher Brent Wood, better known as by stage name Brent Faiyaz, is an American singer and record producer. He released his debut project, an extended play entitled A.M. Paradox, in 2016.</p>
         <div className='PlayButton'>
@@ -106,7 +107,7 @@ const HeroImage = (props) => {
           color: white;
           align-items: center;
           text-align: left;
-          transform: translateX(-5%) translateY(10%);
+          transform: translateY(10%);
           animation: animatedBackground 30s linear infinite alternate;
           transition: background-position .35s ease-in-out;
         }
@@ -150,8 +151,10 @@ const HeroImage = (props) => {
 
 const ImageWText = (props) => {
   const { windowWidth } = props;
+  const iwtWidth = windowWidth-.001;
+  console.log(`iwtWidth:${iwtWidth}`);
   return (
-    <div className='wrapper' style={{ width: `${windowWidth-.01}px` }}>
+    <div className='wrapper' style={{ width: `${iwtWidth}px` }}>
       <div className="artistImg" style={{backgroundImage: `url(${assetPaths.brent})`}}></div>
       <div className="imageTextContainer">
         <h1>Brent Faiyaz, So Far Gone</h1>
@@ -217,6 +220,8 @@ const ImageWText = (props) => {
 
 const ImageSlider = (props) => {
   const { windowWidth } = props;
+  const sliderWidth = (windowWidth-.001)*1.5;
+  console.log(`sliderWidth:${sliderWidth}`);
   const [slideAnimation, setSlideAnimation] = useState(0)
   const sliderCard = [
     {
@@ -239,8 +244,8 @@ const ImageSlider = (props) => {
     }
   ]
   return (
-    <div style={{ width: `${windowWidth*1.5}px` }} className="sliderSectionWrapper">
-      <div style={{ width: `${windowWidth*1.5}px` }} className="sliderWrapper">
+    <div style={{ width: `${sliderWidth}px`, transform: `translateX(-${sliderWidth*.12}px)` }} className="sliderSectionWrapper">
+      <div style={{ width: `${sliderWidth*1.5}px` }} className="sliderWrapper">
         <div className="sliderSectionTextBox">
           <h1 className="sliderSectionHeader">New Releases</h1>
           <p className="sliderSectionBodyText">New albums every single month, check out the newest & best from Snyder Recording artists, now available on Apple Music and Spotify.</p>
@@ -271,8 +276,7 @@ const ImageSlider = (props) => {
         {`
           .sliderSectionWrapper {
             background-color: #f6f6f6;
-            overflow-x: hidden
-            transform: translateX(-20%);
+            overflow-x: hidden;
           }
 
           .sliderWrapper {
@@ -398,8 +402,10 @@ const ImageSlider = (props) => {
 
 const GMaps = (props) => {
   const { windowWidth } = props;
+  const gMapsWidth = windowWidth-.001;
+  console.log(`gMapsWidth:${gMapsWidth}`);
   return (
-    <div style={{ height: `${80}vh`, width: `${windowWidth-0.1}px`, backgroundColor: "#001D5D", transform: `translateX(${-5}%)`}}>
+    <div style={{ height: `${80}vh`, width: `${gMapsWidth}px`, backgroundColor: "#001D5D"}}>
 
     </div>
   )
@@ -408,13 +414,16 @@ const GMaps = (props) => {
 const ContactUs = ({onSubmit, windowWidth}) => {
   const { register, handleSubmit, errors } = useForm();
   const [ firstNameError, lastNameError, emailError, textboxReqError, textboxLengthError ] = [ errors.firstName && errors.firstName?.type === "required", errors.lastName && errors.lastName?.type === "required", errors.email && errors.email?.type === "required", errors.textbox && errors.textbox?.type === "required", errors.textbox && errors.textbox?.type === "minLength" ];
+
+  const contactUsWidth = windowWidth-.001;
+  console.log(`contactUsWidth:${contactUsWidth}`);
   return (
-    <div style={{ width: `${windowWidth-.01}px` }} className="ContactUsWrapper">
-      <div style={{ width: `${windowWidth/2}px` }} className="formWrapper">
+    <div style={{ width: `${contactUsWidth}px` }} className="ContactUsWrapper">
+      <div style={{ width: `${contactUsWidth/2}px` }} className="formWrapper">
         <h1>Get In Touch</h1>
         <p>New albums every single month, check out the newest & best from Snyder Recording artists, now available on Apple Music & Spotify</p>
         <div>
-          <form style={{ width: `${windowWidth/2}px` }} onSubmit={handleSubmit(onSubmit)}>
+          <form style={{ width: `${contactUsWidth/2}px` }} onSubmit={handleSubmit(onSubmit)}>
             {
               (()=>{
                 if (firstNameError || lastNameError || emailError || textboxReqError || textboxLengthError) { return (
@@ -464,14 +473,13 @@ const ContactUs = ({onSubmit, windowWidth}) => {
           </form>
         </div>
       </div>
-      <div style={{ width: `${windowWidth/2}px`, backgroundImage: `url(${assetPaths.contactUs})` }} className="ContactUsImg">
+      <div style={{ width: `${contactUsWidth/2}px`, backgroundImage: `url(${assetPaths.contactUs})` }} className="ContactUsImg">
       </div>
       <style jsx>
         {`
           .ContactUsWrapper {
             height: 120vh;
             background-color: #fff;
-            transform: translateX(-5%);
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -484,7 +492,6 @@ const ContactUs = ({onSubmit, windowWidth}) => {
             background-repeat: no-repeat;
             background-attachment: scroll;
             background-position: center;
-            transform: translateX(-%5)
           }
 
           .formWrapper{
@@ -675,6 +682,8 @@ const CustomSelect =()=> {
 
 const Footer = (props) => {
   const { windowWidth } = props;
+  const footerWidth = windowWidth-.001;
+  console.log(`footerWidth:${footerWidth}`);
   const footerLists = [
     [
         assetPaths.logo,
@@ -732,7 +741,6 @@ const Footer = (props) => {
 
   const SwapInLogo = (props) => {
     const { logoBoolean, logo, item } = props;
-    console.log(logoBoolean)
     return (
       <>
         { !logoBoolean ? item : <img className='SRRLogo' src={logo} alt='logo' /> }
@@ -741,8 +749,8 @@ const Footer = (props) => {
   }
   console.log(assetPaths.youtube)
   return (
-    <div style={{ width: `${windowWidth-0.1}px` }} className="listWrapper">
-      <ul style={{ width: `${windowWidth-0.1}px` }} className="FooterLists">
+    <div style={{ width: `${footerWidth-0.1}px` }} className="listWrapper">
+      <ul style={{ width: `${footerWidth-0.1}px` }} className="FooterLists">
         { 
           footerLists.map(list => (
             <ul className="list">
@@ -791,7 +799,6 @@ const Footer = (props) => {
             margin-top: 0;
             padding: 5%;
             background-color: #001D5D;
-            transform: translateX(-5%)
           }
 
           ul {
@@ -832,12 +839,10 @@ const Footer = (props) => {
             padding: 2% 0 2% 5%;
             background-color: #001D5D;
             width: 100vw;
-            transform: translateX(-5%)
           }
 
           .divider {
             background-color: #001D5D;
-            transform: translateX(-5%);
             width: 100vw;
             display: flex;
             align-items: center;
@@ -884,14 +889,27 @@ const Footer = (props) => {
 }
 
 export default function Home() {
-  const [windowWidth, setWindowWidth] = useState(0);
-  const updateWidth =()=> {
-    typeof window !== 'undefined' ? setWindowWidth(window.innerWidth) : 0
-  } 
+  async function checkWindow () {
+    const windowIsLoaded = await Promise.resolve(window !== 'undefined' && !(isNaN(window.innerWidth)));
+    return windowIsLoaded
+  };
+  const [windowWidth, setWindowWidth] = useState(()=>{checkWindow().then(()=>{
+    console.log(`Initial Global Width:${window.innerWidth}`)
+    return (window.innerWidth);
+  })});
+   
   useEffect(() => {
-    window.addEventListener("resize", updateWidth);
-    console.log(windowWidth)  
-  },[]);
+    checkWindow().then(()=>{
+      function updateWidth() {
+        setWindowWidth(window.innerWidth);
+        console.log(`New global width:${window.innerWidth}`)
+      }
+      window.addEventListener("load", updateWidth)
+      window.addEventListener("resize", updateWidth);
+      return ()=>{window.removeEventListener("resize")}
+    },[window.innerWidth])
+  });
+  
 
   return (
     <div>
@@ -910,18 +928,17 @@ export default function Home() {
             artists={assetPaths.artists}
             concerts={assetPaths.concerts}
             windowWidth={windowWidth}
-            key={windowWidth}
           />
           <HeroImage
             hero={assetPaths.hero}
             playButton={assetPaths.playButton}
             windowWidth={windowWidth}
           />
-          <ImageWText windowWidth={windowWidth} />
-          <ImageSlider windowWidth={windowWidth} />
-          <GMaps windowWidth={windowWidth} />
-          <ContactUs windowWidth={windowWidth} />
-          <Footer windowWidth={windowWidth} />
+          <ImageWText windowWidth={windowWidth}  />
+          <ImageSlider windowWidth={windowWidth}  />
+          <GMaps windowWidth={windowWidth}  />
+          <ContactUs windowWidth={windowWidth}  />
+          <Footer windowWidth={windowWidth}  />
         </div>
       </Layout>
     </div>

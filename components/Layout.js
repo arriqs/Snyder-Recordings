@@ -16,7 +16,7 @@ function Layout(props) {
           }
 
           .LayoutWrapper {
-            margin: 0 5% 5% 5%
+            margin: 0;
           }
 
           .Header {
@@ -28,7 +28,6 @@ function Layout(props) {
             justify-content: space-between;
             position: fixed;
             z-index: 10;
-            transform: translateX(-5%);
             padding: 0 5% 0 5%
           }
 
