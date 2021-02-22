@@ -39,7 +39,7 @@ function Layout(props) {
           li.Menu {
             display: inline;
             margin-right: 3em;
-            float: inline-end
+            float: right;
             color: #001D5D;
             transition: .35s ease-in-out
           }
@@ -52,9 +52,9 @@ function Layout(props) {
           }
 
 
-          img.Menu {
+          .menuIcon {
             margin-right: 0.5em;
-            transform: translateY(28%)
+            transform: translateY(28%);
           }
 
           .Container {
@@ -62,8 +62,6 @@ function Layout(props) {
           }
 
           img.SRRLogo {
-            height: 6em;
-            width: 6em;
             margin-right: 15vw;
           }
 
@@ -113,6 +111,10 @@ function Layout(props) {
             opacity: 1;
             background-color: #68C242;
             color: white;
+          }
+
+          span.Menu {
+            padding-bottom: 1em
           }
 
           p {

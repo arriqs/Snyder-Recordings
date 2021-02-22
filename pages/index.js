@@ -1,8 +1,9 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Layout from '../components/Layout';
-import PortfolioForm from '../components/Form';
 import { useForm } from "react-hook-form";
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+
 
 
 
@@ -62,22 +63,65 @@ const PlayButton =()=> {
 
 
 const NavBar = (props) => {
-  const { logo, home, records, music, artists, concerts, windowWidth } = props;
+  const { logo, home, records, music, artists, concerts, windowWidth, windowHeight } = props;
   const navWidth = windowWidth-.001;
+
   console.log(`navWidth:${navWidth}`);
 
   return (
     <div className="Header" style={{ width: `${navWidth}px`}}>
-      <img 
+      <img
+        width={navWidth*.07}
+        height={navWidth*.06} 
         src={logo}
         className="SRRLogo" 
         alt="logo" />
       <ul className="Menu">
-        <li className="Menu"><img className="Menu" alt='home' src={home} /><span className="Menu">Home</span></li>
-        <li className="Menu"><img className="Menu" alt='records' src={records} /><span className="Menu">Records</span></li>
-        <li className="Menu"><img className="Menu" alt='music' src={music} />Music</li>
-        <li className="Menu"><img className="Menu" alt='artists' src={artists} />Artists</li>
-        <li className="Menu"><img className="Menu" alt='concerts' src={concerts} />Concerts</li>
+        <li className="Menu">
+          <img 
+            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }} 
+            className="menuIcon" 
+            alt='home' 
+            src={home}  
+          />
+          <span className="Menu">Home</span>
+        </li>
+        <li className="Menu">
+          <img 
+            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+            className="menuIcon"
+            alt='records' 
+            src={records} 
+          />
+          <span className="Menu">Records</span>
+          </li>
+        <li className="Menu">
+          <img 
+            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+            className="menuIcon"
+            alt='music' 
+            src={music} 
+            />
+              <span className="Menu">Music</span>
+            </li>
+        <li className="Menu">
+          <img 
+            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+            className="menuIcon" 
+            alt='artists' 
+            src={artists}
+          />
+          <span className="Menu">Artists</span>
+        </li>
+        <li className="Menu">
+          <img
+            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+            className="menuIcon"
+            className="menuIcon" 
+            alt='concerts' 
+            src={concerts} />
+          <span className="Menu">Concerts</span>
+        </li>
       </ul>
       <button className="Menu">Sign Up</button>
     </div>
@@ -91,7 +135,7 @@ const HeroImage = (props) => {
   return (
     <div style={{ backgroundImage: `url(${hero})`, width: `${heroWidth}px` }} className='Hero'>
       <div className='HeroText' style={{ width: `${heroWidth/2}px` }}>
-        <h1 className='HeroText'>A.M. Paradox</h1>
+        <h1 style={{ fontSize: `${heroWidth*.06}px` }} className='HeroText'>A.M. Paradox</h1>
         <p>Christopher Brent Wood, better known as by stage name Brent Faiyaz, is an American singer and record producer. He released his debut project, an extended play entitled A.M. Paradox, in 2016.</p>
         <div className='PlayButton'>
           <PlayButton />
@@ -894,20 +938,27 @@ export default function Home() {
     return windowIsLoaded
   };
   const [windowWidth, setWindowWidth] = useState(()=>{checkWindow().then(()=>{
-    console.log(`Initial Global Width:${window.innerWidth}`)
+    console.log(`Initial Window Width:${window.innerWidth}`)
     return (window.innerWidth);
   })});
-   
+
+  const [windowHeight, setWindowHeight] = useState(()=>{checkWindow().then(()=>{
+    console.log(`Initial Window Height:${window.innerHeight}`)
+    return (window.innerHeight);
+  })});
+  
   useEffect(() => {
     checkWindow().then(()=>{
-      function updateWidth() {
+      function updateDimensions() {
         setWindowWidth(window.innerWidth);
-        console.log(`New global width:${window.innerWidth}`)
+        setWindowHeight(window.innerHeight);
+        console.log(`New window width:${window.innerWidth}`)
+        console.log(`New window height:${window.innerHeight}`)
       }
-      window.addEventListener("load", updateWidth)
-      window.addEventListener("resize", updateWidth);
-      return ()=>{window.removeEventListener("resize")}
-    },[window.innerWidth])
+      window.addEventListener("load", updateDimensions)
+      window.addEventListener("resize", updateDimensions);
+      return ()=>{window.removeEventListener("resize"); window.removeEventListener('load')}
+    },[window.innerWidth, window.innerHeight])
   });
   
 
@@ -928,17 +979,19 @@ export default function Home() {
             artists={assetPaths.artists}
             concerts={assetPaths.concerts}
             windowWidth={windowWidth}
+            windowHeight={windowHeight}
           />
           <HeroImage
             hero={assetPaths.hero}
             playButton={assetPaths.playButton}
             windowWidth={windowWidth}
+            windowHeight={windowHeight}
           />
-          <ImageWText windowWidth={windowWidth}  />
-          <ImageSlider windowWidth={windowWidth}  />
-          <GMaps windowWidth={windowWidth}  />
-          <ContactUs windowWidth={windowWidth}  />
-          <Footer windowWidth={windowWidth}  />
+          <ImageWText windowWidth={windowWidth} windowHeight={windowHeight}  />
+          <ImageSlider windowWidth={windowWidth} windowHeight={windowHeight}  />
+          <GMaps windowWidth={windowWidth} windowHeight={windowHeight}  />
+          <ContactUs windowWidth={windowWidth} windowHeight={windowHeight}  />
+          <Footer windowWidth={windowWidth} windowHeight={windowHeight}  />
         </div>
       </Layout>
     </div>
