@@ -9,7 +9,7 @@ function Layout(props) {
             font-family: Karla;
             font-weight: bold
           }
-
+          
           body {
             overflow-x: hidden;
             background-image: linear-gradient(#fff, #fff, #fff, #001D5D, #001D5D);
@@ -21,7 +21,7 @@ function Layout(props) {
 
           .Header {
             background-color: #FFF;
-            font-size: 14px;
+            font-size: min(1rem, 14px);
             font-weight: bold;
             display: inline-flex;
             align-items: center;
@@ -66,14 +66,14 @@ function Layout(props) {
           }
 
           h1.HeroText {
-            font-size: 65px;
+            font-size: min(4rem, 65px);
             font-weight: bold;
             color: #FFF;
             letter-spacing: 0.73px
           }
 
           h1 {
-            font-size: 2.5rem;
+            font-size: min(2.5rem, 40px);
             font-weight: bold;
             letter-spacing: 0;
             line-height: 50px;
@@ -81,27 +81,26 @@ function Layout(props) {
           }
 
           h2 {
-            font-size: 30px;
+            font-size: min(2rem, 30px);
             font-weight: bold;
             letter-spacing: 0;
             line-height: 40px;
           }
 
           h3 {
-            font-size: 16px;
+            font-size: min(1rem, 16px);
             font-weight: bold;
             color: #68C242
           }
 
           button {
-            font-size: 14px;
+            font-size: min(.8rem, 14px);
             font-weight: bold;
             background-color: #D9F0D0;
             border: none;
             color: #68C242;
             padding: 10px 32px;
             text-align: center;
-            font-size: 16px;
             margin: 4px 2px;
             opacity: 0.7;
             transition: 0.5s;
@@ -118,10 +117,10 @@ function Layout(props) {
           }
 
           p {
-            font-size: 1rem;
+            font-size: min(3rem, 16px);
             font-weight: light;
             font-kerning: normal;
-            line-height: 25px;
+            line-height: min(3rem, 25px);
             color: ##B8BFCF;
             letter-spacing: 0
           }

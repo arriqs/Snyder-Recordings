@@ -25,11 +25,16 @@ const assetPaths = {
   snapchat: '/Icons/SVGs/Snapchat.svg'
 }
 
-const PlayButton =()=> {
-  const [opacity, setOpacity] = useState(0.8)
+const PlayButton = (props) => {
+  const { heroWidth } = props;
+  const [opacity, setOpacity] = useState(0.8);
+  const [playBtnSize, setPlayBtnSize] = useState(`${!(isNaN(heroWidth)) ? heroWidth*.04 : 39}px`);
+  useEffect(()=>{
+    setPlayBtnSize(`${heroWidth*.04}px`)
+  },[heroWidth])
   return (
     <>
-      <svg width="39px" height="39px" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" >
+      <svg onMouseEnter={()=>{setPlayBtnSize(`${heroWidth*.045}px`)}} onMouseLeave={()=>{setPlayBtnSize(`${heroWidth*.04}px`)}} width={playBtnSize} height={playBtnSize} viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" >
           <title>Group 4 Copy</title>
           <desc>Created with Sketch.</desc>
           <defs></defs>
@@ -60,7 +65,16 @@ const PlayButton =()=> {
   )
 }
 
-
+const HamburgerIcon = (props) => {
+  const { navWidth } = props;
+  return (
+    <svg viewBox="0 0 100 80" width={navWidth*.04} height={navWidth*.04}>
+      <rect width="80" height="10"></rect>
+      <rect y="25" width="80" height="10"></rect>
+      <rect y="50" width="80" height="10"></rect>
+    </svg>
+  )
+}
 
 const NavBar = (props) => {
   const { logo, home, records, music, artists, concerts, windowWidth, windowHeight } = props;
@@ -76,54 +90,56 @@ const NavBar = (props) => {
         src={logo}
         className="SRRLogo" 
         alt="logo" />
-      <ul className="Menu">
-        <li className="Menu">
-          <img 
-            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }} 
-            className="menuIcon" 
-            alt='home' 
-            src={home}  
-          />
-          <span className="Menu">Home</span>
-        </li>
-        <li className="Menu">
-          <img 
-            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
-            className="menuIcon"
-            alt='records' 
-            src={records} 
-          />
-          <span className="Menu">Records</span>
-          </li>
-        <li className="Menu">
-          <img 
-            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
-            className="menuIcon"
-            alt='music' 
-            src={music} 
+      { navWidth/windowHeight <= 1 || navWidth < 1200 ? <HamburgerIcon navWidth={navWidth} /> : <>
+        <ul className="Menu">
+          <li className="Menu">
+            <img 
+              style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }} 
+              className="menuIcon" 
+              alt='home' 
+              src={home}  
             />
-              <span className="Menu">Music</span>
+            <span className="Menu">Home</span>
+          </li>
+          <li className="Menu">
+            <img 
+              style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+              className="menuIcon"
+              alt='records' 
+              src={records} 
+            />
+            <span className="Menu">Records</span>
             </li>
-        <li className="Menu">
-          <img 
-            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
-            className="menuIcon" 
-            alt='artists' 
-            src={artists}
-          />
-          <span className="Menu">Artists</span>
-        </li>
-        <li className="Menu">
-          <img
-            style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
-            className="menuIcon"
-            className="menuIcon" 
-            alt='concerts' 
-            src={concerts} />
-          <span className="Menu">Concerts</span>
-        </li>
-      </ul>
-      <button className="Menu">Sign Up</button>
+          <li className="Menu">
+            <img 
+              style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+              className="menuIcon"
+              alt='music' 
+              src={music} 
+              />
+                <span className="Menu">Music</span>
+              </li>
+          <li className="Menu">
+            <img 
+              style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+              className="menuIcon" 
+              alt='artists' 
+              src={artists}
+            />
+            <span className="Menu">Artists</span>
+          </li>
+          <li className="Menu">
+            <img
+              style={{ width: `${windowWidth*.023}px`, height: `${windowWidth*.023}px` }}
+              className="menuIcon"
+              className="menuIcon" 
+              alt='concerts' 
+              src={concerts} />
+            <span className="Menu">Concerts</span>
+          </li>
+        </ul>
+        <button className="Menu">Sign Up</button>
+      </>}
     </div>
   )
 }
@@ -133,13 +149,25 @@ const HeroImage = (props) => {
   const heroWidth = windowWidth-.001;
   console.log(`heroWidth:${heroWidth}`);
   return (
-    <div style={{ backgroundImage: `url(${hero})`, width: `${heroWidth}px` }} className='Hero'>
-      <div className='HeroText' style={{ width: `${heroWidth/2}px` }}>
-        <h1 style={{ fontSize: `${heroWidth*.06}px` }} className='HeroText'>A.M. Paradox</h1>
-        <p>Christopher Brent Wood, better known as by stage name Brent Faiyaz, is an American singer and record producer. He released his debut project, an extended play entitled A.M. Paradox, in 2016.</p>
+    <div 
+      style={{ 
+        backgroundImage: `url(${hero})`,
+        height: `${heroWidth*.5}px`,
+        width: `${heroWidth}px`,
+        transform: `translateY(${heroWidth*.0025}%)`
+      }} 
+      className='Hero'>
+      <div 
+        className='HeroText' 
+        style={{ 
+          width: `${heroWidth/2}px`,
+          transform: `translateY(-${heroWidth*.0025}%)`
+        }}>
+        <h1 style={{ fontSize: `${heroWidth*.06}px`, lineHeight: `${(heroWidth*0.06)+10}px` }} className='HeroText'>A.M. Paradox</h1>
+        <p style={{ fontSize: `${heroWidth*.02}px`, lineHeight: `${(heroWidth*.02)+10}px` }}>Christopher Brent Wood, better known as by stage name Brent Faiyaz, is an American singer and record producer. He released his debut project, an extended play entitled A.M. Paradox, in 2016.</p>
         <div className='PlayButton'>
-          <PlayButton />
-          <p>Watch Video</p>
+          <PlayButton heroWidth={heroWidth} />
+          <p style={{ fontSize: `${heroWidth*.02}px`, lineHeight: `${(heroWidth*.02)+10}px` }}>Watch Video</p>
         </div>
       </div>
       <style jsx>{`
@@ -151,9 +179,12 @@ const HeroImage = (props) => {
           color: white;
           align-items: center;
           text-align: left;
-          transform: translateY(10%);
           animation: animatedBackground 30s linear infinite alternate;
           transition: background-position .35s ease-in-out;
+        }
+
+        @media only screen and (min-width: 600px) {
+          transform: translateY(30%)
         }
 
         @keyframes animatedBackground {
@@ -198,11 +229,11 @@ const ImageWText = (props) => {
   const iwtWidth = windowWidth-.001;
   console.log(`iwtWidth:${iwtWidth}`);
   return (
-    <div className='wrapper' style={{ width: `${iwtWidth}px` }}>
+    <div className='wrapper' style={{ width: `${iwtWidth}px`, height: `${iwtWidth*.7}px` }}>
       <div className="artistImg" style={{backgroundImage: `url(${assetPaths.brent})`}}></div>
       <div className="imageTextContainer">
-        <h1>Brent Faiyaz, So Far Gone</h1>
-        <p className="BodyText">
+        <h1 style={{ fontSize: `${iwtWidth*.03}px`, lineHeight: `${(iwtWidth*.03)+10}px` }}>Brent Faiyaz, So Far Gone</h1>
+        <p style={{ fontSize: `${iwtWidth*.02}px`, lineHeight: `${(iwtWidth*.02)+10}px` }} className="BodyText">
           Faiyaz began uploading his music onto SoundCloud in 2014 and moved from his hometown Columbia, Maryland to Charlotte, North Carolina before ultimately settling in Los Angeles, California to further his music career. On January 19, 2015, he released his debut single "Allure".[4] On June 1, 2016, Faiyaz released "Invite Me", the lead single from his upcoming debut EP. On September 19, 2016, his 21st birthday, the EP entitled A.M. Paradox was released and received with positive revviews from music critics. On January 26, 2017, Sonder released their debut EP Into.
         </p>
         <button>Learn More</button>
@@ -212,11 +243,10 @@ const ImageWText = (props) => {
           margin-top: 10%;
           display: flex;
           flex-wrap: wrap;
-          height: 70vh
         }
         
         .artistImg {
-          height: inherit;
+          height: 95%;
           background-repeat: no-repeat;
           background-attachment: scroll;
           background-position: center;
@@ -231,7 +261,7 @@ const ImageWText = (props) => {
           display: flex;
           flex-direction: column;
           max-width: 40%;
-          height: inherit;
+          height: 95%;
           align-items: flex-start;
           justify-content: space-between;
         }
@@ -246,8 +276,8 @@ const ImageWText = (props) => {
           margin-bottom: 0;
           padding-top: 0;
           padding-right: 10vw;
-          font-size: 40px;
-          line-height: 1.3em
+          font-size: min(10rem, 40px);
+          line-height: min(1.3em, 50px)
         }
 
         p {
@@ -255,7 +285,8 @@ const ImageWText = (props) => {
           padding: 1em 1vw 1em 0;
           margin: 0 0 1em;
           overflow-y: scroll;
-          font-size: 1em
+          font-size: min(6rem, 40px);
+          line-height: min(1.3em, 50px)
         }
       `}</style>
     </div>
